@@ -17,6 +17,7 @@ mongoose
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.render('index')
@@ -41,10 +42,20 @@ app.get('/activities', async (req, res) => {
   res.render('activities/index', { groupedActivities })
 })
 
+app.get('/activities/new', async (req, res) => {
+  res.render('activities/new')
+})
+
 app.get('/activities/:id', async (req, res) => {
   const { id } = req.params
   const activity = await Activity.findById(id)
   res.render('activities/details', { activity })
+})
+
+app.post('/activities', async (req, res) => {
+  const newActivity = new Activity(req.body)
+  await newActivity.save()
+  res.redirect(`/activities/${newActivity._id}`)
 })
 
 app.listen(PORT, () => {

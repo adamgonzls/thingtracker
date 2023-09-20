@@ -9,12 +9,15 @@
     <h1>Activities</h1>
     <% for( const date in groupedActivities ) { %>
     <h2><%= date %></h2>
-    <% groupedActivities[date].forEach(activity => { %>
     <ul>
-      <span><%= activity.activityType %></span>
-      <p><%= activity.activity %></p>
-      <a href="/activities/<%= activity._id %>">Details</a>
+      <% groupedActivities[date].forEach(activity => { %>
+      <li>
+        <span><%= activity.activityType %></span>
+        <p><%= activity.activity %></p>
+        <a href="/activities/<%= activity._id %>">Details</a>
+      </li>
+      <% }) %>
     </ul>
-    <% }) %> <% } %>
+    <% } %>
   </body>
 </html>
