@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activities</title>
+  </head>
+  <body>
+    <h1>Activities</h1>
+    <% for( const date in groupedActivities ) { %>
+    <h2><%= date %></h2>
+    <% groupedActivities[date].forEach(activity => { %>
+    <ul>
+      <span><%= activity.activityType %></span>
+      <p><%= activity.activity %></p>
+      <a href="/activities/<%= activity._id %>">Details</a>
+    </ul>
+    <% }) %> <% } %>
+  </body>
+</html>
