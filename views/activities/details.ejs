@@ -11,6 +11,10 @@
     <span>Activity date: <%= activity.date %></span> <br />
     <span>Category: <%= activity.activityType %></span>
     <p>Activity: <%= activity.activity %></p>
+    <form action="/activities/<%= activity._id %>?_method=DELETE" method="POST">
+      <button>Delete</button>
+    </form>
     <% } %>
+    <a href="/activities/<%= activity._id %>/edit">Edit</a>
   </body>
 </html>

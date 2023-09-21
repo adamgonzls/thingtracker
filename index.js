@@ -4,6 +4,7 @@ const PORT = 3000
 const mongoose = require('mongoose')
 const path = require('path')
 const Activity = require('./models/activity')
+const methodOverride = require('method-override')
 
 mongoose
   .connect('mongodb://localhost:27017/thingTracker')
@@ -17,6 +18,7 @@ mongoose
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
@@ -38,11 +40,11 @@ app.get('/activities', async (req, res) => {
     }, {})
   }
   const groupedActivities = groupBy(activities, 'date')
-  console.log(groupedActivities)
+  // console.log(groupedActivities)
   res.render('activities/index', { groupedActivities })
 })
 
-app.get('/activities/new', async (req, res) => {
+app.get('/activities/new', (req, res) => {
   res.render('activities/new')
 })
 
@@ -52,10 +54,28 @@ app.get('/activities/:id', async (req, res) => {
   res.render('activities/details', { activity })
 })
 
+app.get('/activities/:id/edit', async (req, res) => {
+  const activity = await Activity.findById(req.params.id)
+  res.render('activities/edit', { activity })
+})
+
+app.put('/activities/:id', async (req, res) => {
+  const activity = await Activity.findByIdAndUpdate(req.params.id, {
+    ...req.body,
+  })
+  res.redirect(`/activities/${activity._id}`)
+})
+
 app.post('/activities', async (req, res) => {
   const newActivity = new Activity(req.body)
   await newActivity.save()
   res.redirect(`/activities/${newActivity._id}`)
+})
+
+app.delete('/activities/:id', async (req, res) => {
+  console.log(req.params.id)
+  await Activity.findByIdAndDelete(req.params.id)
+  res.redirect('/activities')
 })
 
 app.listen(PORT, () => {
