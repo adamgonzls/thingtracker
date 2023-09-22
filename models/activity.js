@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { activityTypes } = require('../variables')
 
 const ActivitySchema = new Schema({
   activityType: {
-    enum: ['food', 'exercise', 'mood', 'body function', 'chore'],
+    enum: activityTypes,
     type: String,
   },
   activity: String,

@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Activity Details</title>
-  </head>
-  <body>
-    <h1>Activity Details:</h1>
-    <% if (activity) { %>
-    <span>Activity date: <%= activity.date %></span> <br />
-    <span>Category: <%= activity.activityType %></span>
-    <p>Activity: <%= activity.activity %></p>
-    <form action="/activities/<%= activity._id %>?_method=DELETE" method="POST">
-      <button>Delete</button>
-    </form>
-    <% } %>
-    <a href="/activities/<%= activity._id %>/edit">Edit</a>
-  </body>
-</html>
+<% layout('layouts/boilerplate') -%>
+
+<h1>Activity Details:</h1>
+<% if (activity) { %>
+<span>Activity date: <%= activity.date %></span> <br />
+<span>Category: <%= activity.activityType %></span>
+<p>Activity: <%= activity.activity %></p>
+<form action="/activities/<%= activity._id %>?_method=DELETE" method="POST">
+  <button class="btn">Delete</button>
+</form>
+<% } %>
+<a class="btn" href="/activities/<%= activity._id %>/edit">Edit</a>

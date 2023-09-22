@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Activities</title>
-  </head>
-  <body>
-    <h1>Activities</h1>
-    <% for( const date in groupedActivities ) { %>
-    <h2><%= date %></h2>
-    <ul>
-      <% groupedActivities[date].forEach(activity => { %>
-      <li>
-        <span><%= activity.activityType %></span>
-        <p><%= activity.activity %></p>
-        <a href="/activities/<%= activity._id %>">Details</a>
-      </li>
-      <% }) %>
-    </ul>
-    <% } %>
-  </body>
-</html>
+<% layout('layouts/boilerplate') -%>
+
+<h1>Activities</h1>
+<a class="btn" href="/activities/new">Add new activity</a>
+<% for( const date in groupedActivities ) { %>
+<h2 class="activity-list__header"><%= date %></h2>
+<ul class="activity-list">
+  <% groupedActivities[date].forEach(activity => { %>
+  <li class="activity-list__item">
+    <span><%= activity.activityType %></span>
+    <p><%= activity.activity %></p>
+    <a class="btn" href="/activities/<%= activity._id %>">Details</a>
+    <a class="btn" href="/activities/<%= activity._id %>/edit">Edit</a>
+  </li>
+  <% }) %>
+</ul>
+<% } %>

@@ -1,37 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Activity</title>
-  </head>
-  <body>
-    <form action="/activities/<%= activity._id %>?_method=PUT" method="POST">
-      <label for="type">Activity Type:</label>
-      <select name="activityType" id="type">
-        <option value="">Choose Activity Type</option>
-        <option value="food">Food</option>
-        <option value="exercise">Exercise</option>
-        <option value="mood">Mood</option>
-        <option value="body function">Body function</option>
-        <option value="chore">Chore</option>
-      </select>
-      <label for="activity">Activity:</label>
-      <input
-        type="text"
-        id="activity"
-        name="activity"
-        placeholder="Went to bed at 9:30pm"
-        value="<%= activity.activity %>"
-      />
-      <label for="date">Date:</label>
-      <input
-        type="date"
-        id="date"
-        name="date"
-        value="<%= new Date(activity['date']).toISOString().split('T')[0] %>"
-      />
-      <button>Update Activity</button>
-    </form>
-  </body>
-</html>
+<% layout('layouts/boilerplate') -%>
+<form action="/activities/<%= activity._id %>?_method=PUT" method="POST">
+  <label for="type">Activity Type:</label>
+  <select name="activityType" id="type">
+    <% activityTypes.forEach(type => { %>
+    <option value="<%= type %>" <%= activity.activityType === type ? "selected" : "" %>><%= type %></option>
+    <% }) %>
+  </select>
+  <label for="activity">Activity:</label>
+  <input
+    type="text"
+    id="activity"
+    name="activity"
+    placeholder="Went to bed at 9:30pm"
+    value="<%= activity.activity %>"
+  />
+  <label for="date">Date:</label>
+  <input
+    type="date"
+    id="date"
+    name="date"
+    value="<%= new Date(activity['date']).toISOString().split('T')[0] %>"
+  />
+  <button class="btn">Update Activity</button>
+</form>
